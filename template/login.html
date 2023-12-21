@@ -1,0 +1,6 @@
+<form class="login-form" action="/note/login/" method="POST" enctype="multipart/form-data">
+    <h3>Login Here</h3>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
