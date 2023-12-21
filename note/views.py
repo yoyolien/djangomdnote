@@ -4,9 +4,11 @@ from django.views import View
 from django.views.generic import ListView
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .forms import RegisterUserForm
 from .models import Note
@@ -22,7 +24,7 @@ class ProtectedView(APIView):
 
 class NoteListCreateView(APIView):
     permission_classes = (IsAuthenticated,)
-
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         notes = Note.objects.filter(user=request.user)
         serializer = NoteSerializer(notes, many=True)
