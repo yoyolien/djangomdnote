@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.views import View
 from django.views.generic import ListView
 from django.shortcuts import render
+
 from rest_framework import status
 from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import IsAuthenticated
@@ -12,8 +13,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
-
-from .forms import RegisterUserForm
 from .models import Note
 from .serializers import NoteSerializer
 
@@ -46,29 +45,6 @@ class NoteListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class RegisterUserView(View):
-    template_name = "register_user.html"
-    form_class = RegisterUserForm
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {"form": form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password1"]
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return render(request, "home.html")
-        else:
-            return render(request, self.template_name, {"form": form})
-
-
-class LoginUserView(LoginView):
-    template_name = "login.html"
 
 
 class HomeView(ListView):
