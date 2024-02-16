@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - type: volume
+        source: static
+        target: /static
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
+    volumes:
+      - type: volume
+        source: static
+        target: /static
+
+networks:
+  webnet:
+
+volumes:
+  static:

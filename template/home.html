@@ -1,9 +1,0 @@
-{% load markdown%}
-
-{% for note in object_list %}
-<div>
-  <h2>{{ note.title }}</h2>
-  <p>{{ note.content | markdown | safe }}</p>
-</div>
-<hr>
-{% endfor %}
