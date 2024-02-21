@@ -1,0 +1,9 @@
+<form class="register-form" action="" method="POST" enctype="multipart/form-data">
+    <h3>Register</h3>
+    <br/>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+
+</form>
