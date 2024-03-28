@@ -23,7 +23,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("", NoteListCreateView.as_view()),
-    path("home", HomeView.as_view(),name="home"),
+    # path("home", HomeView.as_view(),name="home"),
     path("verifytest", ProtectedView.as_view()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.views import View
 from django.views.generic import ListView
@@ -25,14 +26,14 @@ class ProtectedView(APIView):
 
 
 class NoteListCreateView(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = [JWTAuthentication]
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = [JWTAuthentication]
 
     @swagger_auto_schema(
         responses={200: NoteSerializer(many=True)}
     )
     def get(self, request):
-        notes = Note.objects.filter(user=request.user)
+        notes = Note.objects.all()
         serializer = NoteSerializer(notes, many=True)
         return Response(serializer.data)
 
@@ -46,7 +47,7 @@ class NoteListCreateView(APIView):
 
 
 
-
+@login_required()
 class HomeView(ListView):
     model = Note
     template_name = "home.html"

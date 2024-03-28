@@ -6,7 +6,7 @@ services:
     volumes:
       - type: volume
         source: static
-        target: /static
+        target: /usr/src/app/static
   nginx:
     build: ./nginx
     ports:
